@@ -5,14 +5,14 @@ using FailTracker.Web.Infrastructure.Tasks;
 
 namespace FailTracker.Web
 {
- /*   public class SeedData : IRunAtStartup
+   public class SeedData : IRunAtStartup
     {
-        private readonly ApplicationDbContext _context;
+        //private readonly ApplicationDbContext _context;
 
-        public SeedData(ApplicationDbContext context)
-        {
-            _context = context;
-        }
+        //public SeedData(ApplicationDbContext context)
+        //{
+        //    _context = context;
+        //}
 
         public void Execute()
         {
@@ -36,5 +36,5 @@ namespace FailTracker.Web
             //    _context.SaveChanges();
             //}
         }
-    }*/
+    }
 }

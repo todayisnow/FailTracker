@@ -73,7 +73,7 @@ namespace FailTracker.Web.Controllers
             _context.Issues.Add(new Issue(_currentUser.User, assignedToUser, form.IssueType, form.Subject, form.Body));
 
             _context.SaveChanges();
-            throw new InvalidCastException();
+           
             return RedirectToAction<HomeController>(c => c.Index())
                 .WithSuccess("Issue created!");
         }
