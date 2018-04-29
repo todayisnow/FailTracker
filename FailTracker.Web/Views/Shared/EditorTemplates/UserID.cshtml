@@ -1,0 +1,7 @@
+﻿@using FailTracker.Web.App_Start
+@using FailTracker.Web.Data
+@using FailTracker.Web.Infrastructure
+@model string
+
+
+@Html.DropDownList("", (SelectListItem[])ViewBag.AvailableUsers, new { @class = "form-control" })

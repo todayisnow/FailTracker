@@ -1,0 +1,66 @@
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Reflection;
+using AutoMapper;
+using AutoMapper.Configuration;
+using FailTracker.Web.App_Start;
+using FailTracker.Web.Domain;
+using FailTracker.Web.Infrastructure.Mapping;
+using FailTracker.Web.Infrastructure.Tasks;
+using FailTracker.Web.Models.Issue;
+
+namespace FailTracker.Web
+{
+	public class AutoMapperConfig : IRunAtInit
+	{
+
+	    public static MapperConfigurationExpression Configuration { get; } = new MapperConfigurationExpression();
+
+        public void Execute()
+		{
+			var types = Assembly.GetExecutingAssembly().GetExportedTypes();
+    
+            LoadStandardMappings(types);
+			LoadCustomMappings(types);
+
+		    Mapper.Initialize(Configuration);
+
+		}
+
+		private static void LoadCustomMappings(IEnumerable<Type> types)
+		{
+			var maps = (from t in types
+						from i in t.GetInterfaces()
+						where typeof(IHaveCustomMappings).IsAssignableFrom(t) &&
+							  !t.IsAbstract &&
+							  !t.IsInterface
+						select (IHaveCustomMappings)Activator.CreateInstance(t)).ToArray();
+
+			foreach (var map in maps)
+			{
+				map.CreateMappings(Configuration);
+			}
+		}
+
+		private static void LoadStandardMappings(IEnumerable<Type> types)
+		{
+			var maps = (from t in types
+						from i in t.GetInterfaces()
+						where i.IsGenericType &&
+							  i.GetGenericTypeDefinition() == typeof(IMapFrom<>) &&
+							  !t.IsAbstract &&
+							  !t.IsInterface
+						select new
+						{
+							Source = i.GetGenericArguments()[0],
+							Destination = t
+						}).ToArray();
+
+			foreach (var map in maps)
+			{
+				Configuration.CreateMap(map.Source, map.Destination); 
+            }
+		}
+	}
+}
