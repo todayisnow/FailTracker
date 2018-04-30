@@ -232,6 +232,10 @@
     <Compile Include="Infrastructure\Tasks\IRunOnError.cs" />
     <Compile Include="DependencyResolution\Registry\TaskRegistry.cs" />
     <Compile Include="Infrastructure\TransactionPerRequest.cs" />
+    <Compile Include="Migrations\201804301049289_First.cs" />
+    <Compile Include="Migrations\201804301049289_First.Designer.cs">
+      <DependentUpon>201804301049289_First.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="ModelMetadata\ExtensibleModelMetadataProvider.cs" />
     <Compile Include="ModelMetadata\Filters\LabelConventionFilter.cs" />
@@ -331,6 +335,11 @@
   <ItemGroup>
     <Content Include="packages.config" />
     <None Include="Project_Readme.html" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Migrations\201804301049289_First.resx">
+      <DependentUpon>201804301049289_First.cs</DependentUpon>
+    </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
